@@ -1,0 +1,9 @@
+                                                              ONLINE BANKING SYSTEM
+                                                              
+      OBJECTIVE:
+      
+      The main aim of our project is to develop a web application for providing safe and secure banking to customers.The customer will use this application for transactions or checking his current balance.Customer can add beneficiary and can transfer amount easily.Customer can also transfer money immediately using quick transfer.Employee and Manager also have access to this application.When a customer requests for a new account, manager will receive the request,verify details and will approve or reject the request.Both employees and manager can view all customers and transactions details. 
+      
+      In the development process, technologies like HTML, CSS, Bootstrap for User Interface(UI), JSP, Servlets and Hibernate for server side programming and MySQL for database are used.
+      
+      ->Our application provides online registration for new account instead of visiting the bank.
