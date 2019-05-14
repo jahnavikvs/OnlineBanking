@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <title>Samriddhi Home Page</title>
 <link rel ="icon" type="image/ico" href="only globe.jpg"/>
@@ -22,7 +21,7 @@
   text-decoration: none;
   margin: 5px 2px;
   border-radius: 50%;
-  color:black;
+  color:white;
 }
 
 .fa:hover {
@@ -110,7 +109,7 @@
     text-decoration:underline;
     background:#212094;
 }
- body {margin:150px;height:1500px;background-color:white;
+ body {height:500px;background-color:white;
  }
   .carousel-inner img {
     width: 100%;
@@ -191,15 +190,13 @@ header h1 {
   font-family: "Raleway", sans-serif;
 }
 
-.container {
+.container1 {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  padding: 0 20px;
-  margin-top:0px;
 }
-.container .thumbex {
+.container1 .thumbex {
   margin: 10px 20px 30px;
   width: 100%;
   min-width: 250px;
@@ -214,7 +211,7 @@ header h1 {
   background-color: blue;
   box-shadow: 5px 10px 40px 5px rgba(0, 0, 0, 0.5);
 }
-.container .thumbex .thumbnail {
+.container1 .thumbex .thumbnail {
   overflow: hidden;
   min-width: 100px;
   height: 300px;
@@ -223,7 +220,7 @@ header h1 {
   backface-visibility: hidden;
   transition: all 0.4s ease-out;
 }
-.container .thumbex .thumbnail img {
+.container1 .thumbex .thumbnail img {
   position: absolute;
   z-index: 1;
   left: 50%;
@@ -233,7 +230,7 @@ header h1 {
   transform: translate(-50%, -50%);
   backface-visibility: hidden;
 }
-.container .thumbex .thumbnail span {
+.container1 .thumbex .thumbnail span {
   position: absolute;
   z-index: 2;
   top: calc(10px 50px);
@@ -250,24 +247,16 @@ header h1 {
   letter-spacing: 0.2px;
   transition: all 0.3s ease-out;
 }
-.container .thumbex .thumbnail:hover {
+.container1 .thumbex .thumbnail:hover {
   backface-visibility: hidden;
   transform: scale(1.15, 1.15);
   opacity: 1;
 }
-.container .thumbex .thumbnail:hover span {
+.container1 .thumbex .thumbnail:hover span {
   opacity: 2;
 }
  
-body {
-  height: 100%;
-   background-image: url("");
-   background-color:#DFDFEE;
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+
 .bg { 
   /* The image used */
 
@@ -301,9 +290,41 @@ margin-top:0px;
 margin-bottom:20px;
 background-color:#f1f1f1;
 }
+h1 {
+ overflow: hidden;
+ text-align: center;
+}
+h1:before,
+h1:after {
+ background-color: #333;
+ content: "";
+ display: inline-block;
+ height: 1px;
+ position: relative;
+ vertical-align: middle;
+ width: 50%;
+}
+h1:before {
+ right: 0.5em;
+ margin-left: -50%;
+}
+h1:after {
+ left: 0.5em;
+ margin-right: -50%;
+}
+.blinking{
+    animation:blinkingText 10s infinite;
+    margin-left:250px;
+}
+@keyframes blinkingText{
+    10%{     color: red;    }
+    50%{    color: blue; }
+    100%{    color: green; }
+    
+}
  </style>
 </head>
-<body background="mainbackground.jpg";>
+<body>
 <body>
 <div class="sticky-container">
     <ul class="sticky">
@@ -333,8 +354,9 @@ background-color:#f1f1f1;
         </li>
     </ul>
 </div>
-<div class="contaier">
-  <nav class="navbar navbar-expand-lg navbar-light bg-info text-light py-0">
+<div class="container bg-light">
+<div class="contaier" style="margin-left:0px;margin-right:0px;">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light text-light py-0">
           <div class="container">
             <a class="navbar-brand"><img src="logofinal.jpg" alt="Logo"></a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -347,8 +369,8 @@ background-color:#f1f1f1;
                 </ul>
               </div>
           </div>
-        </nav>  </br>
-        <nav class="navbar navbar-expand-lg navbar-light bg-info text-light py-1">
+        </nav>  
+        <nav class="navbar navbar-expand-lg navbar-light bg-info nav-right text-light py-1">
         <div class="container">
         <div class="collapse navbar-collapse" id="navbarCollapse2">
             <div class="navbar-nav">
@@ -356,52 +378,53 @@ background-color:#f1f1f1;
                 <a href="#" class="nav-item nav-link text-white active">About Us<span style="display:inline-block; width: 10px;"></span></a>
                 <a href="#" class="nav-item nav-link text-white active">Contact</a><span style="display:inline-block; width: 10px;"></span>
                 <a href="#" class="nav-item nav-link text-white active">Help</a>
-                
                 </div>
+                 <ul class="nav navbar-nav ml-auto">
+      <li><a href="#"class="nav-item nav-link text-white active"><i class="fa fa-fw fa-user fa-lg"></i>Register<span class="sr-only">(current)</span></a></li>
+      <li><a href="#" class="nav-item nav-link text-white active"><i class="fa fa-fw fa-sign-in fa-lg"></i>Login<span class="sr-only">(current)</span></a></li>
+    </ul>
                 </div>
                 </div>
     </nav>
-    <marquee BEHAVIOR=SCROLL 
+    </div>
+    
+<marquee BEHAVIOR=SCROLL 
  
      direction="left"
      loop="30"
-     scrollamount="8"
+     scrollamount="5"
      scrolldelay="1"
      behavior="alternate"
      width="100%"
      height=40
      bgcolor="#F0C179"
      
-     >
-Dear Onlinesnb users, Internet Banking services will not be accessible to you if your mobile number is not updated in the Bank records. Please register your mobile number immediately to enjoy uninterrupted services.        |          Dear customer, beware of fake sites- before logging into onlinesnb for making transactions, please ensure that the URL address bar begins with https:// with padlock symbol. Click the padlock to check the Security Certificate.        |         Longer the time taken to notify, higher would be the risk of loss to you.        |      Please be cautious.
+     ><font color="#000000">
+Dear Online snb users, Internet Banking services will not be accessible to you if your mobile number is not updated in the Bank records. Please register your mobile number immediately to enjoy uninterrupted services.        |          Dear customer, beware of fake sites- before logging into onlinesnb for making transactions, please ensure that the URL address bar begins with https:// with padlock symbol. Click the padlock to check the Security Certificate.        |         Longer the time taken to notify, higher would be the risk of loss to you.        |      Please be cautious.
+</font>
 </marquee>
-    <div class="row "><span style="display:inline-block; width: 60px;"></span>
-    <div class="col-sm-5 div1 text-center">
-    <span style="display:inline-block; width: 0px;"></span><i class="fa fa-fw fa-user fa-4x"><span style="display:inline-block; width: 500px;"></span></i>
-    <a href="CustomerLoginPage.jsp"><h4><font color="blue">Customer Login</font></h4></a>
-    </div><span style="display:inline-block; width: 65px;"></span>
-    <div class="col-sm-5 div1 text-center">
-    <i class="fa fa-fw fa-users fa-4x"><span style="display:inline-block; width: 500px;"></span></i>
-    <a href="ManagerLoginPage.jsp"><h4><font color="blue">Employees Login</font></h4>
-    </div>
-    </div>
-  </br>
-  </div>
+   </br>
+  <span class="blinking">Online SNB never asks for confidential information like PIN , OTP from customers.</span><br/>
+  <span class="blinking">Any search all can be made only by a fraudster.Please don't share personal info.</span>
 <div id="demo" class="carousel slide" data-ride="carousel">
   <ul class="carousel-indicators">
     <li data-target="#demo" data-slide-to="0" class="active"></li>
     <li data-target="#demo" data-slide-to="1"></li>
     <li data-target="#demo" data-slide-to="2"></li>
+    <li data-target="#demo" data-slide-to="3"></li>
   </ul>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="home3.jpg">   
-    </div>
-    <div class="carousel-item">
-      <img src="net-banking.jpg">
-    </div>
-    <div class="carousel-item">
       <img src="pic 3.jpg">   
+    </div>
+    <div class="carousel-item">
+      <img src="services-banner-image1.jpg">   
+    </div>
+    <div class="carousel-item">
+      <img src="home3.jpg">
+    </div>
+    <div class="carousel-item">
+      <img src="Watch this site reallygreatsite.com.png">   
     </div>
   </div>
   <a class="carousel-control-prev" href="#demo" data-slide="prev">
@@ -411,7 +434,9 @@ Dear Onlinesnb users, Internet Banking services will not be accessible to you if
     <span class="carousel-control-next-icon"></span>
   </a>
 </div>
-<div class="container">
+<br/>
+<font color="black"><h1>Explore More</h1></font><br/>
+<div class="container1">
   <div class="thumbex">
     <div class="thumbnail"> <img src="savings1.jpg"><span>Savings</span></div>
   </div>
@@ -431,12 +456,12 @@ Dear Onlinesnb users, Internet Banking services will not be accessible to you if
     <div class="thumbnail"><img src="offerssummer.png" /><span>Offers</span></div>
   </div>
   </div>
-
+</div>
 <div class="jumbotron text-center text-dark" style="margin-bottom:0">
   <footer class="page-footer font-small pt-0">
      <div class="row">
    
-         <div class="col-sm-4">
+         <div class="col-sm-6">
              <b><p>
                  Information & Research Help
              </p></b>
@@ -446,12 +471,14 @@ Dear Onlinesnb users, Internet Banking services will not be accessible to you if
              <p>
                  630-844-3848 (fax)
              </p>
+             <b><p>
+                e-mail 
+             </p></b>
              <p>
-                 630-796-7615 (text)
-             </p>
+                SNBonline@gmail.com
          </div>
          
-          <div class="col-sm-4">
+          <div class="col-sm-6">
              <b><p>
                  @SAMRIDHI Terms and conditions
              </p></b>
@@ -469,13 +496,7 @@ Dear Onlinesnb users, Internet Banking services will not be accessible to you if
              </p>
              
          </div>
-         <div class="col-sm-4">
-             <b><p>
-                e-mail 
-             </p></b>
-             <p>
-                SNBonline@gmail.com
-             </div>
+       
 </div> 
          </footer>
 </div>
