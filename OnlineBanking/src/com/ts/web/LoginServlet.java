@@ -23,23 +23,17 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		String user = request.getParameter("userName");
+		int empId = Integer.parseInt(request.getParameter("empId"));
 		String pass = request.getParameter("password");
-		System.out.println(pass + " " + user);
+		System.out.println(pass + " " + empId);
 		EmployeeDAO employeeDao = new EmployeeDAO();
-		Employee employee = employeeDao.getEmployee(user);
+		Employee employee = employeeDao.getEmployee(empId);
 		System.out.println("Hi!");
 		//System.out.println(customer);
 		out.print("<html>");		
 		if(employee!=null){
 			HttpSession session = request.getSession(true);
-			session.setAttribute("userName", user);
-			session.setAttribute("password", pass);
-			session.setAttribute("empId", employee.getEmpId());
-			//session.setAttribute("accNo", customer.getAccounts().getAccNo());
-			//System.out.println(customer.getLastLogin());
-			//System.out.println(redgCustomer);
-       
+			session.setAttribute("empId", empId);       
 			if(pass.equals(employee.getPassword()) && employee.getJob().equalsIgnoreCase("manager"))
 			{
 				RequestDispatcher rd = request.getRequestDispatcher("ManagerHomePage.jsp");
