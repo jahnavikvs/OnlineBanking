@@ -16,62 +16,82 @@ public class Employee {
 	@Column(length=25)
 	private String lName;
 	@Column(length=25)
+	private String gender;
+	@Column(length=25)
 	private double salary;
 	@Column(length=25)
 	private String job;
 	@Column(length=25)
 	private long ePhno;
 	@Column(length=25)
-	private String userName;
-	@Column(length=25)
 	private String password;
 	@Column(length=25)
 	private Date dateOfJoin;
 	@Column(length=25)
 	private String eEmail;
+	@Column(length=25)
+	private Date lastLogin;
 	
 	
 	public Employee() {
 		super();	
 	}
 	
-	public Employee(String fName, String lName, double salary, String job, long ePhno, String userName, String password, Date dateOfJoin, String eEmail) {
+		public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+				public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+				@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", fName=" + fName + ", lName=" + lName + ", gender=" + gender + ", salary="
+				+ salary + ", job=" + job + ", ePhno=" + ePhno + ", password=" + password + ", dateOfJoin=" + dateOfJoin
+				+ ", eEmail=" + eEmail + ", lastLogin=" + lastLogin + "]";
+	}
+
+				public Employee(String fName, String lName, String gender, double salary, String job, long ePhno, String password,
+			Date dateOfJoin, String eEmail, Date lastLogin) {
 		super();
 		this.fName = fName;
 		this.lName = lName;
+		this.gender = gender;
 		this.salary = salary;
 		this.job = job;
 		this.ePhno = ePhno;
-		this.userName = userName;
 		this.password = password;
 		this.dateOfJoin = dateOfJoin;
 		this.eEmail = eEmail;
+		this.lastLogin = lastLogin;
 	}
-	
-	public Employee(int empId, String fName, String lName, double salary, String job, long ePhno, String userName, String password, Date dateOfJoin, String eEmail) {
+
+				public Employee(int empId, String fName, String lName, String gender, double salary, String job, long ePhno,
+			String password, Date dateOfJoin, String eEmail, Date lastLogin) {
 		super();
 		this.empId = empId;
 		this.fName = fName;
 		this.lName = lName;
+		this.gender = gender;
 		this.salary = salary;
 		this.job = job;
 		this.ePhno = ePhno;
-		this.userName = userName;
 		this.password = password;
 		this.dateOfJoin = dateOfJoin;
 		this.eEmail = eEmail;
+		this.lastLogin = lastLogin;
 	}
 
-	
-	
-	@Override
-	public String toString() {
-		return "Employee [empId=" + empId + ", fName=" + fName + ", lName=" + lName + ", salary=" + salary + ", job="
-				+ job + ", ePhno=" + ePhno + ", userName=" + userName + ", password=" + password + ", dateOfJoin="
-				+ dateOfJoin + ", eEmail=" + eEmail + "]";
-	}
-	
-	public long getePhno() {
+				public long getePhno() {
 		return ePhno;
 	}
 
@@ -123,12 +143,7 @@ public class Employee {
 	public void setJob(String job) {
 		this.job = job;
 	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+	
 	public String getPassword() {
 		return password;
 	}
