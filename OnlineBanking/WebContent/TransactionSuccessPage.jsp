@@ -40,15 +40,15 @@ img.bg {
 </style>
 <% Transactions transaction= (Transactions)session.getAttribute("transaction");
    long bAccNo = transaction.getBeneficiaryAccNo();
-   long accNo = (Long)session.getAttribute("accNo");
+   long accNo = (Long)session.getAttribute("accountNumber");
    double amount = transaction.getAmount();
    AccountsDAO accountsDao = new AccountsDAO();
    Accounts accounts = accountsDao.getAccount(accNo);
    Accounts baccounts = accountsDao.getAccount(bAccNo);
    String bAccName = baccounts.getCustomer().getFirstName() +  " " + baccounts.getCustomer().getLastName();
-   Customer customer = (Customer)session.getAttribute("customer");
+   Customer customer = accounts.getCustomer();
    %>
-<div class="container" style="margin-top:30px">
+<div class="container" style="margin-top:0px">
   <nav class="navbar navbar-expand-lg navbar-light bg-info text-light py-1 main-nav">
           <div class="container">
             <a class="navbar-brand" href="index.html"><img src="logoonline.jpg" alt="Logo"></a>
@@ -72,35 +72,36 @@ img.bg {
 
 
   <div class="row">
+<span style="display:inline-block; width: 17px;"></span>
+<font style="background-color:#DEDEE4;height:30px">
+Last Login: <%= customer.getLastLogin()%></font>
+<span style="display:inline-block; width: 697px;"></span>
+<font style="background-color:#DEDEE4;height:30px;width:250px">
+Welcome <%=customer.getFirstName() + " " + customer.getLastName()%></font>
+</div>
+  <div class="row">
     <div class="col-sm-4">
-      <h2>About Me</h2>
-      <h5>Photo of me:</h5>
-      <img class="d-block img-fluid" src="manager.png" alt="First slide">
-      <p>Hello..Customer welcome to your home page...</p>
-      
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
           <a class="nav-link active bg-success">Online Services</a>
         </li>
+         
         <li class="nav-item">
-          <a class="nav-link" href="AccountSummary.jsp"><i class="fa fa-fw fa-list fa-lg" aria-hidden="true"></i><b>Account Summary</b></a>
+          <a class="nav-link" href="AccountSummary.jsp"><i class="fa fa-fw fa-list fa-lg" aria-hidden="true"></i><span class="sr-only">(current)</span><b>Account Summary</b></a>
         </li>
         <li class="nav-item">
-         <a class="nav-link" href="AddBeneficiary.jsp"><i class="fa fa-fw fa-user-plus fa-lg" aria-hidden="true"></i><b>Add Beneficiary</b></a>         
+          <a class="nav-link" href="FundsTransfer.jsp"><i class="fa fa-fw fa-exchange fa-lg" aria-hidden="true"></i><b>Funds Transfer</b></a>
         </li>
         <li class="nav-item">
-         <a class="nav-link" href="TransactionHomePage.jsp"><i class="fa fa-fw fa-repeat fa-lg" aria-hidden="true"></i><b>Quick Transfer</b></a>         
+          <a class="nav-link" href="TransactionHomePage.jsp"><i class="fa fa-fw fa-repeat fa-lg" aria-hidden="true"></i><b>Quick Transfer</b></a>
         </li>
         <li class="nav-item">
-         <a class="nav-link" href="FundsTransfer.jsp"><i class="fa fa-fw fa-exchange fa-lg" aria-hidden="true"></i><b>Funds Transfer</b></a>         
+          <a class="nav-link" href="TransactionHistory1.jsp"><i class="fa fa-fw fa-history fa-lg" aria-hidden="true"></i><b>Transaction History</b></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="TransactionHistory.jsp"><i class="fa fa-fw fa-history fa-lg" aria-hidden="true"></i><b>Transaction History</b></a>
+          <a class="nav-link" href="ManageBeneficiaries.jsp"><i class="fa fa-fw fa-group fa-lg" aria-hidden="true"></i><b>Manage Beneficiaries</b></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="RequestForAnother.jsp"><i class="fa fa-fw fa-group fa-lg" aria-hidden="true"></i><b>Request for another Account</b></a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item">        
           <a class="nav-link" href="CustomerProfile.jsp"><i class="fa fa-fw fa-user-circle-o fa-lg" aria-hidden="true"></i><b>Profile</b></b></a>
         </li>
       </ul>
@@ -109,7 +110,6 @@ img.bg {
       
     </div>
     <div class="col-sm-8">
-    <h2>Hello..<%= customer.getFirstName() + " " + customer.getLastName()%></h2></br>
     <span style="display:inline-block; width: 2000px;"><a class="nav-link text-uppercase font-weight-bold text-success" href="#">Transaction Summary<span class="sr-only">(current)</span></a>   
              <nav class="navbar navbar-expand-lg navbar-light py-1 main-nav">
              <div class="alert alert-success">
@@ -136,10 +136,6 @@ img.bg {
         <tr>
         <td>Account Number :</td>
         <td><%=accNo%></td>
-        </tr>
-        <tr>
-        <td>Account Type :</td>
-        <td><%=accounts.getAccountType()%></td>
         </tr>
         <tr>
         <td>Current Balance :</td>
@@ -172,9 +168,7 @@ img.bg {
         </div>
         </div>
 </div>
-</body>
-    </div>
-  </div>
+    
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
