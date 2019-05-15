@@ -21,34 +21,32 @@ public class CustomerLoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		String user = request.getParameter("userName");
+		int  customerId = Integer.parseInt(request.getParameter("customerId"));
 		String pass = request.getParameter("password");
-		System.out.println(pass + " " + user);
+		System.out.println(pass + " " + customerId);
 		
 		CustomerDAO customerDao = new CustomerDAO();
-		System.out.println("Hi!"+user);
-		Customer customer = customerDao.getCustomer(user);
-		List<Customer> customers = customerDao.getAllCustomers();
-		for (Customer customer1: customers)
-		    System.out.println(customer1);
+	
+		Customer customer = customerDao.getCustomer(customerId);
+	
 		
 		System.out.println(customer);
 		out.print("<html>");		
 		if(customer!=null){
 			HttpSession session = request.getSession(true);
-			session.setAttribute("userName", user);
-			session.setAttribute("cId", customer.getCustomerId());
+			session.setAttribute("customerId", customerId);
        
 			if(pass.equals(customer.getPassword()))
 			{
-				List<Accounts> accounts = customer.getAccounts();
-				System.out.println(accounts);
-				for(Accounts account : accounts) {
-					if(account.getStatus().equals("Approved")) {
-						RequestDispatcher rd = request.getRequestDispatcher("CustomerHomePage.jsp");
+				Accounts account = customer.getAccount();
+				System.out.println(account);
+				
+					if(account.getStatus().equals("Enabled")) {
+						session.setAttribute("accountNumber", account.getAccountNumber());
+						RequestDispatcher rd = request.getRequestDispatcher("CustomerHomePage1.jsp");
 						rd.forward(request, response);
 					}
-				}
+				
 				RequestDispatcher rd = request.getRequestDispatcher("CustomerInvalidLogin.jsp");
 	     		rd.forward(request, response);
 			}
