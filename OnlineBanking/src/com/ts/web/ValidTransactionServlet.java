@@ -28,10 +28,10 @@ public class ValidTransactionServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		String bName = request.getParameter("bName");
+	
 		HttpSession session = request.getSession(true);
 		long bAccNo = (Long)session.getAttribute("bAccNo");
-		long accNo = (Long)session.getAttribute("accNo");
+		long accNo = (Long)session.getAttribute("accountNumber");
 		double amount = (Double)session.getAttribute("amount");
 		
 		
@@ -49,13 +49,13 @@ public class ValidTransactionServlet extends HttpServlet {
 		System.out.println(accNo + " " + bAccNo);
 		AccountsDAO accountDao = new AccountsDAO();
 		Accounts acc1 = accountDao.getAccount(accNo);
-		Accounts account1 = new Accounts(accNo, acc1.getAccountType(), (acc1.getBalance() - amount), acc1.getAccountOpenDate(), acc1.getStatus(), acc1.getCustomer());
+		Accounts account1 = new Accounts(accNo, (acc1.getBalance() - amount), acc1.getAccountOpenDate(), acc1.getStatus(), acc1.getCustomer());
 		int x1 = HibernateTemplate.updateObject(account1);
 		System.out.println(x1);
 		
 		AccountsDAO accountDao1 = new AccountsDAO();
 		Accounts acc2 = accountDao1.getAccount(bAccNo);
-		Accounts account2 = new Accounts(bAccNo, acc2.getAccountType(), (acc2.getBalance() + amount), acc2.getAccountOpenDate(),acc2.getStatus(), acc2.getCustomer());
+		Accounts account2 = new Accounts(bAccNo, (acc2.getBalance() + amount), acc2.getAccountOpenDate(),acc2.getStatus(), acc2.getCustomer());
 		int x2 = HibernateTemplate.updateObject(account2);
 		System.out.println(x2);
 		
