@@ -28,10 +28,13 @@ public class FundsTransferServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		long bAccNo = Long.parseLong(request.getParameter("bAccNumber"));
-		long accNo = Long.parseLong(request.getParameter("accountNumber"));
+	
+		HttpSession session = request.getSession(true);
+		long accNo = (Long)session.getAttribute("accountNumber");
+		
 		double amount = Double.parseDouble(request.getParameter("amount"));
 		
-		System.out.println(bAccNo + " " + amount + accNo);
+		//System.out.println(bAccNo + " " + amount + accNo);
 
 		
 		AccountsDAO accDao1 = new AccountsDAO();
@@ -39,8 +42,8 @@ public class FundsTransferServlet extends HttpServlet {
         AccountsDAO accDao2 = new AccountsDAO();
         Accounts account1 = accDao2.getAccount(accNo);	
         
-		System.out.println(account1);
-		System.out.println(account2);
+		//System.out.println(account1);
+		//System.out.println(account2);
 		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date dateobj = new Date();
@@ -55,19 +58,19 @@ public class FundsTransferServlet extends HttpServlet {
 		java.sql.Date  date2 = new java.sql.Date(date1.getTime());
 		System.out.println(accNo + " " + bAccNo);
 	
-		Accounts acc1 = new Accounts(accNo, account1.getAccountType(), (account1.getBalance() - amount), account1.getAccountOpenDate(), account1.getStatus(), account1.getCustomer());
+		Accounts acc1 = new Accounts(accNo, (account1.getBalance() - amount), account1.getAccountOpenDate(), account1.getStatus(), account1.getCustomer());
 		int x1 = HibernateTemplate.updateObject(acc1);
 		System.out.println(x1);
 
-		Accounts acc2 = new Accounts(bAccNo, account2.getAccountType(), (account2.getBalance() + amount), account2.getAccountOpenDate(), account2.getStatus(), account2.getCustomer());
+		Accounts acc2 = new Accounts(bAccNo, (account2.getBalance() + amount), account2.getAccountOpenDate(), account2.getStatus(), account2.getCustomer());
 		int x2 = HibernateTemplate.updateObject(acc2);
 		System.out.println(x2);
 		
 		Transactions transaction = new Transactions(accNo, date2, bAccNo, "Debit", amount, acc1.getBalance(), acc2.getBalance());
 		
-		HttpSession session = request.getSession(true);
+
 		session.setAttribute("transaction", transaction);
-		session.setAttribute("accNo", accNo);
+	
 		TransactionsDAO tDao = new TransactionsDAO();	
 		int x = tDao.register(transaction);
 		
