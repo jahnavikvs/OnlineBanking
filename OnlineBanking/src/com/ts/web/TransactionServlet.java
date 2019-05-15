@@ -21,9 +21,13 @@ public class TransactionServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		String bAccName = request.getParameter("bAccName");
+		
 		long bAccNo = Long.parseLong(request.getParameter("bAccNo"));
-		long accNo = Long.parseLong(request.getParameter("accountNumber"));
+		
 		double amount = Double.parseDouble(request.getParameter("amount"));
+		
+		HttpSession session = request.getSession(true);
+		long accNo = (Long)session.getAttribute("accountNumber");
 		
 		System.out.println(bAccName + " " + bAccNo + " " + amount + accNo);
 
@@ -36,12 +40,10 @@ public class TransactionServlet extends HttpServlet {
 		System.out.println(account1);
 		System.out.println(account2);
 		if (account1 != null) {
-			if ( account1.getStatus().equalsIgnoreCase("Approved") && ((account2.getAccountType().equalsIgnoreCase("savings") && account2.getBalance() - amount >= 500) || (account2.getAccountType().equalsIgnoreCase("current") && account2.getBalance() - amount >= 1000)) ) {
-				HttpSession session = request.getSession(true);
+			if ( account1.getStatus().equalsIgnoreCase("Enabled")) {
 				session.setAttribute("bAccNo", bAccNo);
 				session.setAttribute("bAccName", bAccName);
 				session.setAttribute("amount", amount);
-				session.setAttribute("accNo", accNo);
 				System.out.println("hii");
 				RequestDispatcher rd = request.getRequestDispatcher("ValidTransactionServlet");
 				rd.include(request, response);
