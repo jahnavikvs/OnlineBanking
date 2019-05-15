@@ -20,7 +20,7 @@
   }
   </style>
 </head>
-<body>
+<body style="background-color:white;">
 <style>
 img.bg {
     min-height: 100%;
@@ -35,20 +35,58 @@ img.bg {
 @media screen and (max-width: 1024px){
     img.bg {
     left: 50%;
-    margin-left: 512px; }
+    margin-left: 512px; 
+    }
 }
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 300px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: #2980b9;
+  color: white;
+  z-index: 2;
+}
+
+.flip-card-back {
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
 </style>
-<% int cId = (Integer)session.getAttribute("cId");
+
+<% int cId = (Integer)session.getAttribute("customerId");
    CustomerDAO customerDao = new CustomerDAO();
    Customer customer = customerDao.getCustomer(cId);
-   List<Accounts> accounts = customer.getAccounts();
-   List<Accounts> validaccounts = new ArrayList<Accounts>();
-   for (Accounts account: accounts) {
-	   if (account.getStatus().equalsIgnoreCase("Approved")) {
-		   validaccounts.add(account);
-	   }
-   }
-   session.setAttribute("accountsList",validaccounts);
+   Accounts account = customer.getAccount();
+   
+   session.setAttribute("account", account);
    List<Beneficiary> beneficiary = customer.getBeneficiary();
    List<Beneficiary> validbeneficiary = new ArrayList<Beneficiary>();
    for (Beneficiary beneficiary1 : beneficiary) {
@@ -59,7 +97,8 @@ img.bg {
    session.setAttribute("validbeneficiary",validbeneficiary);
    
  %>
-<div class="container" style="margin-top:30px">
+
+<div class="container" style="margin-top:0px">
   <nav class="navbar navbar-expand-lg navbar-light bg-info text-light py-1 main-nav">
           <div class="container">
             <a class="navbar-brand" href="index.html"><img src="logoonline.jpg" alt="Logo"></a>
@@ -79,127 +118,164 @@ img.bg {
                 </ul>
               </div>
           </div>
-        </nav>
-
-
+        </nav> 
+        
+        <marquee BEHAVIOR=SCROLL 
+ 
+     direction="left"
+     loop="30"
+     scrollamount="5"
+     scrolldelay="1"
+     behavior="alternate"
+     width="100%"
+     height="20%"
+     bgcolor="white"
+     
+     ><font color="red">
+Dear Online snb users, Internet Banking services will not be accessible to you if your mobile number is not updated in the Bank records. Please register your mobile number immediately to enjoy uninterrupted services.        |          Dear customer, beware of fake sites- before logging into onlinesnb for making transactions, please ensure that the URL address bar begins with https:// with padlock symbol. Click the padlock to check the Security Certificate.        |         Longer the time taken to notify, higher would be the risk of loss to you.        |      Please be cautious.
+</font>
+</marquee>
+ <nav class="navbar navbar-expand-lg navbar-light bg-info text-light py-1">
+        <div class="container">
+        <div class="collapse navbar-collapse" id="navbarCollapse2">
+            <div class="navbar-nav">
+                <a href="#" class="nav-item nav-link text-white active"><span style="display:inline-block; width: 10px;"></span><span style="display:inline-block; width: 10px;"></span>Deals & More<span style="display:inline-block; width: 10px;"></span></a>
+                <a href="#" class="nav-item nav-link text-white active">About Us<span style="display:inline-block; width: 10px;"></span></a>
+                <a href="#" class="nav-item nav-link text-white active">Contact</a><span style="display:inline-block; width: 10px;"></span>
+            
+                </div>
+                </div>
+                </div>
+    </nav>
+<div class="row">
+<span style="display:inline-block; width: 17px;"></span>
+<font style="background-color:#DEDEE4;height:30px">
+Last Login: <%= customer.getLastLogin()%></font>
+<span style="display:inline-block; width: 697px;"></span>
+<font style="background-color:#DEDEE4;height:30px;width:250px">
+Welcome <%=customer.getFirstName() + " " + customer.getLastName()%></font>
+</div>
   <div class="row">
     <div class="col-sm-4">
-      <h2>About Me</h2>
-      <h5>Photo of me:</h5>
-      <img class="d-block img-fluid" src="manager.png" alt="First slide">
-      <p>Hello..Customer welcome to your home page...</p>
-      
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
           <a class="nav-link active bg-success">Online Services</a>
         </li>
+         
         <li class="nav-item">
-          <a class="nav-link" href="AccountSummary.jsp"><i class="fa fa-fw fa-list fa-lg" aria-hidden="true"></i><b>Account Summary</b></a>
+          <a class="nav-link" href="AccountSummary.jsp"><i class="fa fa-fw fa-list fa-lg" aria-hidden="true"></i><span class="sr-only">(current)</span><b>Account Summary</b></a>
         </li>
         <li class="nav-item">
-         <a class="nav-link" href="AddBeneficiary.jsp"><i class="fa fa-fw fa-user-plus fa-lg" aria-hidden="true"></i><b>Add Beneficiary</b></a>         
+          <a class="nav-link active" href="FundsTransfer.jsp"><i class="fa fa-fw fa-exchange fa-lg" aria-hidden="true"></i><b>Funds Transfer</b></a>
         </li>
         <li class="nav-item">
-         <a class="nav-link" href="TransactionHomePage.jsp"><i class="fa fa-fw fa-repeat fa-lg" aria-hidden="true"></i><b>Quick Transfer</b></a>         
+          <a class="nav-link" href="TransactionHomePage.jsp"><i class="fa fa-fw fa-repeat fa-lg" aria-hidden="true"></i><b>Quick Transfer</b></a>
         </li>
         <li class="nav-item">
-         <a class="nav-link  active bg-info" href="FundsTransfer.jsp"><i class="fa fa-fw fa-exchange fa-lg" aria-hidden="true"></i><b>Funds Transfer</b></a>         
+          <a class="nav-link" href="TransactionHistory1.jsp"><i class="fa fa-fw fa-history fa-lg" aria-hidden="true"></i><b>Transaction History</b></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="TransactionHistory.jsp"><i class="fa fa-fw fa-history fa-lg" aria-hidden="true"></i><b>Transaction History</b></a>
+          <a class="nav-link" href="ManageBeneficiaries.jsp"><i class="fa fa-fw fa-group fa-lg" aria-hidden="true"></i><b>Manage Beneficiaries</b></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="RequestForAnother.jsp"><i class="fa fa-fw fa-group fa-lg" aria-hidden="true"></i><b>Request for another Account</b></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="CustomerProfile.jsp"><i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i><b>Profile</b></b></a>
+        <li class="nav-item">        
+          <a class="nav-link" href="CustomerProfile.jsp"><i class="fa fa-fw fa-user-circle-o fa-lg" aria-hidden="true"></i><b>Profile</b></b></a>
         </li>
       </ul>
       
       <hr class="d-sm-none">
       
     </div>
-    <div class="col-sm-8">
-    
-    
-            <h2>Hello..<%= customer.getFirstName() + " " + customer.getLastName()%></h2></br>
-             <h3>Account Details :</h3></br>
-                 <div class="container">  
+    <div class="col-sm-8"> 
+                   
+        <h3>Account Details :</h3></br>
+              
         <table class="table" cellspacing="5">
-    <tbody>
       <tr>
     <th>Account Number :</th>
-    <th>Account Type :</th>
     <th>Balance :</th>
   </tr>
-  <% for(Accounts account : accounts)  { 
-    if (account.getStatus().equalsIgnoreCase("Approved")) {   %>
+  
   <tr>
     <td><%=account.getAccountNumber() %></td>
-    <td><%=account.getAccountType() %></td>
     <td><%=account.getBalance() %></td>
   </tr>
-  <% } } %>
-        </tbody>
+ 
         </table>
-        </div>
                <form action="FundsTransferServlet" method="post" class="form-horizontal" class="form-horizontal" role="form">
-               <div class="row">
-               <table class="table" cellspacing = "1" >
-               <tr><td>
                  
-                   </br><span style="width:20px"></span> <label for="Account Type" class="col-sm-9 control-label">Select Account Number: </label>
-                    <div class="col-sm-4">
-                        </td><td></br><select class="dropdown text-secondary" name="accountNumber" required style="width:200px;height:30px">
-                        <option>Select Account Number:</option>
-                        <c:forEach var="accounts" items="${accountsList}">
-                              <option value="${accounts.accountNumber}"><c:out value="${accounts.accountNumber}" /></option>
-                        </c:forEach>
-                        </select>
-                    </div>         
-                    </td>
-                    </tr>
-                    </table>    
-                </div>
-                </br>
-               <div class="row">
+                   
+               
                <h3>Beneficiary Details :</h3>
-             
+             <div class="row">
                <table class="table" cellspacing = "1" >
                <tr><td>
-                   </br><span style="width:20px"></span> <label for="Account Type" class="col-sm-9 control-label">Select  Beneficiary Account Number: </label>
+                   </br><span style="width:20px"></span> <label for="Account Type" class="col-sm-9 control-label"><span class="req">Select  Beneficiary Account Number<font color="red">*</font></label>
                     <div class="col-sm-4">
-                        </td><td></br><select class="dropdown text-secondary" name="bAccNumber" required style="width:200px;height:30px">
-                        <option>Select Account Number</option>
+                        </td><td></br><select class="dropdown text-secondary" name="bAccNumber"style="width:200px;height:30px">
+                        <option disabled selected hidden>Select Account Number</option>
                         <c:forEach var="beneficiary" items="${validbeneficiary}">
                               <option value="${beneficiary.beneficiaryAccNumber}"><c:out value="${beneficiary.beneficiaryAccNumber}" /></option>
                         </c:forEach>
                         </select>
-                       </div>         
+                            
                     </td>
                     </tr>
-                    </table>    
-                </div>
-                        </br>
-                <div class="row">
-                    <label for="Amount" class="col-sm-3 control-label">Amount :</label>
-                    <div class="col-sm-5">
-                        <input type="text" name="amount" id="Amount" placeholder="Amount" required class="form-control" autofocus>
+                    </table> 
+                    </div>
+                    <div class="row">
+                    <span style="width:17px"></span><label for="Amount" class="col-sm-3 control-label"><span class="req">Amount<font color="red">*</font></label>
+                    <span style="width:230px"></span><div class="col-sm-4">
+                        <input type="text" name="amount" id="Amount" placeholder="Amount" class="form-control" autofocus  required >
                     </div>
                 </div>
                 </br>
                 </br>
-                <input type="checkbox" name="Terms&conditions" value="terms"required> I agree the terms and conditions <br>
+                <input type="checkbox" name="Terms&conditions" value="terms"required> I agree the <a href="TermsAndonditions.html">terms and conditions </a><br>
                     </br>
                     <input type="submit" name="submit" class="btn btn-success" value="submit"></br>
                 </br>
                 </form>
                 </div>
+        </div>
+       
         
+                <br/>
+    <div class="row">
+             <div id="demo" class="carousel slide" data-ride="carousel">
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+    <li data-target="#demo" data-slide-to="3"></li>
+  </ul>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="pic.png" alt="Image" height="250" width="1120">   
+    </div>
+    <div class="carousel-item">
+    
+      <img src="accounts.png" alt="Image" height="250" width="1120">
+    </div>
+    <div class="carousel-item">
+      <img src="Watch this site reallygreatsite.com (2).png" alt="Image" height="250" width="1120">
+    </div>
+    <div class="carousel-item">
+      <img src="Watch this site reallygreatsite.com (3).png" alt="Image" height="250" width="1120">   
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+       </div> 
                 
     </div>
   </div>
-</div>
+  <br/>
+  
 
 <div class="jumbotron text-center" style="margin-bottom:0">
   <footer class="page-footer font-small blue pt-0">
@@ -225,7 +301,7 @@ img.bg {
                  @SAMRIDHI Terms and conditions
              </p></b>
              <p>
-                 I agree to abide by the
+                 I agree to abide by theq1
              </p>
             <b> <p>
                 Bank's Terms and Conditions 
