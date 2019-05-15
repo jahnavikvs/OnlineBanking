@@ -20,27 +20,40 @@ public class Beneficiary {
 	@Column(length=25)
 	private long beneficiaryAccNumber;
 	@Column(length=25)
+	private int transactionLimit;
+	@Column(length=25)
 	private String status;
 	@ManyToOne
 	@JoinColumn(name="customerId")
 	private Customer customer = new Customer();
-	public Beneficiary(int beneficiaryId, long beneficiaryAccNumber, String status, Customer customer) {
-		super();
-		this.beneficiaryId = beneficiaryId;
-		this.beneficiaryAccNumber = beneficiaryAccNumber;
-		this.status = status;
-		this.customer = customer;
+	
+	
+	public int getTransactionLimit() {
+		return transactionLimit;
 	}
-	public Beneficiary(long beneficiaryAccNumber, String status, Customer customer) {
-		super();
-		this.beneficiaryAccNumber = beneficiaryAccNumber;
-		this.status = status;
-		this.customer = customer;
+	public void setTransactionLimit(int transactionLimit) {
+		this.transactionLimit = transactionLimit;
 	}
 	@Override
 	public String toString() {
 		return "Beneficiary [beneficiaryId=" + beneficiaryId + ", beneficiaryAccNumber=" + beneficiaryAccNumber
-				+ ", status=" + status + ", customer=" + customer + "]";
+				+ ", transactionLimit=" + transactionLimit + ", status=" + status + ", customer=" + customer + "]";
+	}
+	public Beneficiary(int beneficiaryId, long beneficiaryAccNumber, int transactionLimit, String status,
+			Customer customer) {
+		super();
+		this.beneficiaryId = beneficiaryId;
+		this.beneficiaryAccNumber = beneficiaryAccNumber;
+		this.transactionLimit = transactionLimit;
+		this.status = status;
+		this.customer = customer;
+	}
+	public Beneficiary(long beneficiaryAccNumber, int transactionLimit, String status, Customer customer) {
+		super();
+		this.beneficiaryAccNumber = beneficiaryAccNumber;
+		this.transactionLimit = transactionLimit;
+		this.status = status;
+		this.customer = customer;
 	}
 	public int getBeneficiaryId() {
 		return beneficiaryId;
