@@ -28,15 +28,21 @@ public class Customer {
 	@Column(length=25)
 	private long phno;
 	@Column(length=25)
+	private String addressProof;
+	@Column(length=25)
+	private String addressNumber;
+	@Column(length=25)
 	private long aadharNumber;
 	@Column(length=25)
-	private String userName;
+	private String netBanking;
+	@Column(length=50)
+	private String customerEmail;
 	@Column(length=25)
 	private String password;
 	@Column(length=25)
-	private String hint;
-	@OneToMany(mappedBy="customer")
-	private List<Accounts> accounts = new ArrayList<Accounts>();
+	private Date lastLogin;
+	@OneToOne(mappedBy="customer")
+	private Accounts account;
 	@OneToMany(mappedBy="customer")
 	private List<Beneficiary> beneficiary = new ArrayList<Beneficiary>();
 	
@@ -52,7 +58,51 @@ public class Customer {
 		super();	
 	}
 	
-	public Customer(String firstName, String lastName, String gender, String address, Date dateOfBirth, long phno, long aadharNumber, String userName, String password, String hint) {
+	
+	
+	
+	
+	
+	public String getAddressProof() {
+		return addressProof;
+	}
+
+	public void setAddressProof(String addressProof) {
+		this.addressProof = addressProof;
+	}
+
+	public String getAddressNumber() {
+		return addressNumber;
+	}
+
+	public void setAddressNumber(String addressNumber) {
+		this.addressNumber = addressNumber;
+	}
+
+	
+
+
+	
+	public String getNetBanking() {
+		return netBanking;
+	}
+
+	public void setNetBanking(String netBanking) {
+		this.netBanking = netBanking;
+	}
+
+	
+	public String getCustomerEmail() {
+		return customerEmail;
+	}
+
+	public void setCustomerEmail(String customerEmail) {
+		this.customerEmail = customerEmail;
+	}
+
+	public Customer(String firstName, String lastName, String gender, String address, Date dateOfBirth, long phno,
+			String addressProof, String addressNumber, long aadharNumber, String netBanking,
+			String customerEmail, String password, Date lastLogin) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -60,13 +110,18 @@ public class Customer {
 		this.address = address;
 		this.dateOfBirth = dateOfBirth;
 		this.phno = phno;
+		this.addressProof = addressProof;
+		this.addressNumber = addressNumber;
 		this.aadharNumber = aadharNumber;
-		this.hint = hint;
-		this.userName = userName;
+		this.netBanking = netBanking;
+		this.customerEmail = customerEmail;
 		this.password = password;
+		this.lastLogin = lastLogin;
 	}
-	
-	public Customer(int customerId,String firstName, String lastName, String gender, String address, Date dateOfBirth, long phno, long aadharNumber,  String userName, String password, String hint) {
+
+	public Customer(int customerId, String firstName, String lastName, String gender, String address, Date dateOfBirth,
+			long phno, String addressProof, String addressNumber, long aadharNumber, String netBanking, 
+			String customerEmail, String password, Date lastLogin) {
 		super();
 		this.customerId = customerId;
 		this.firstName = firstName;
@@ -75,38 +130,24 @@ public class Customer {
 		this.address = address;
 		this.dateOfBirth = dateOfBirth;
 		this.phno = phno;
+		this.addressProof = addressProof;
+		this.addressNumber = addressNumber;
 		this.aadharNumber = aadharNumber;
-		this.hint = hint;
-		this.userName = userName;
+		this.netBanking = netBanking;
+		this.customerEmail = customerEmail;
 		this.password = password;
-	} 
+		this.lastLogin = lastLogin;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
 	
-
-	
-	
-	public String getHint() {
-		return hint;
-	}
-
-	public void setHint(String hint) {
-		this.hint = hint;
-	}
-
-	@Override
-	public String toString() {
-		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", gender=" + gender + ", address=" + address + ", dateOfBirth=" + dateOfBirth + ", phno=" + phno
-				+ ", aadharNumber=" + aadharNumber + ", userName=" + userName + ", password=" + password + ", hint="
-				+ hint + "]";
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -179,12 +220,12 @@ public class Customer {
 		this.aadharNumber = aadharNumber;
 	}
 
-	public List<Accounts> getAccounts() {
-		return accounts;
+	public Accounts getAccount() {
+		return account;
 	}
 
-	public void setAccounts(List<Accounts> accounts) {
-		this.accounts = accounts;
+	public void setAccount(Accounts accounts) {
+		this.account = accounts;
 	}
 	
 }
