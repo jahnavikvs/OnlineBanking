@@ -18,35 +18,32 @@ public class Accounts {
 	@Id@GeneratedValue
 	private long accountNumber;
 	@Column(length=25)
-	private String accountType;
-	@Column(length=25)
 	private double balance;
 	@Column(length=25)
 	private Date accountOpenDate;
 	@Column(length=25)
 	private String status;
-	@ManyToOne
+	
+	@OneToOne
 	@JoinColumn(name="customerId")
-	private Customer customer = new Customer();
+	private Customer customer;
 	
 
 	public Accounts() {
 		super();	
 	}
 	
-	public Accounts(long accountNumber,String accountType, double balance,Date accountOpenDate, String status, Customer customer) {
+	public Accounts(long accountNumber, double balance,Date accountOpenDate, String status, Customer customer) {
 		super();
 		this.accountNumber = accountNumber;
-		this.accountType = accountType;
 		this.balance = balance;
 		this.accountOpenDate = accountOpenDate;
 		this.status = status;
 		this.customer = customer;
 	}
 	
-	public Accounts(String accountType, double balance,Date accountOpenDate, String status, Customer customer) {
+	public Accounts(double balance,Date accountOpenDate, String status, Customer customer) {
 		super();
-		this.accountType = accountType;
 		this.balance = balance;
 		this.accountOpenDate = accountOpenDate;
 		this.status = status;
@@ -55,7 +52,7 @@ public class Accounts {
 	
 	@Override
 	public String toString() {
-		return "Accounts [accountNumber=" + accountNumber + ", accountType=" + accountType + ", balance=" + balance
+		return "Accounts [accountNumber=" + accountNumber + ", balance=" + balance
 				+ ", accountOpenDate=" + accountOpenDate + ", status=" + status + ", customer=" + customer + "]";
 	}
 	
@@ -75,13 +72,6 @@ public class Accounts {
 		this.accountNumber = accountNumber;
 	}
 
-	public String getAccountType() {
-		return accountType;
-	}
-
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
 
 	public double getBalance() {
 		return balance;
