@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.List,java.util.ArrayList,com.ts.dao.CustomerDAO,com.ts.dto.Customer,com.ts.dto.Accounts"%>
+    pageEncoding="ISO-8859-1" import="com.ts.dao.CustomerDAO,com.ts.dto.Customer,com.ts.dao.AccountsDAO,com.ts.dto.Accounts"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <title>Samridhi Account Summary Page</title>
 <link rel ="icon" type="image/ico" href="only globe.jpg"/>
@@ -17,43 +17,9 @@
     height: 200px;
     background: #aaa;
   }
-  .dropbtn {
-  background-color: white;
-  color: blue;
-  padding: 8px;
-  font-size: 16px;
-  border: none;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: blue;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {background-color: white;}
-
-.dropdown:hover .dropdown-content {display: block;}
-
-.dropdown:hover .dropbtn {background-color: white;}
   </style>
 </head>
-<body>
+<body style="background-color:white;">
 <style>
 img.bg {
     min-height: 100%;
@@ -62,23 +28,64 @@ img.bg {
     height: auto;
     position: fixed;
     top: 0;
-    
     left: 0;
 }
 
 @media screen and (max-width: 1024px){
     img.bg {
     left: 50%;
-    margin-left: 512px; }
+    margin-left: 512px; 
+    }
 }
-body {  background-image: url(backgroundimage.jpg); }
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 300px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: #2980b9;
+  color: white;
+  z-index: 2;
+}
+
+.flip-card-back {
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
 </style>
-<%CustomerDAO customerDAO = new CustomerDAO();
-int cId = (Integer)session.getAttribute("cId");
-Customer customer = (Customer)session.getAttribute("customer");
-List<Accounts> accounts = customer.getAccounts();
-%> 
-<div class="container" style="margin-top:30px">
+
+<%int customerId = (Integer)session.getAttribute("customerId");
+CustomerDAO customerDao = new CustomerDAO();
+Customer customer = customerDao.getCustomer(customerId);
+Accounts account = customer.getAccount();
+%>
+<div class="container" style="margin-top:0px">
   <nav class="navbar navbar-expand-lg navbar-light bg-info text-light py-1 main-nav">
           <div class="container">
             <a class="navbar-brand" href="index.html"><img src="logoonline.jpg" alt="Logo"></a>
@@ -98,39 +105,66 @@ List<Accounts> accounts = customer.getAccounts();
                 </ul>
               </div>
           </div>
-        </nav>
-
-
+        </nav> 
+        
+        <marquee BEHAVIOR=SCROLL 
+ 
+     direction="left"
+     loop="30"
+     scrollamount="5"
+     scrolldelay="1"
+     behavior="alternate"
+     width="100%"
+     height="20%"
+     bgcolor="white"
+     
+     ><font color="red">
+Dear Online snb users, Internet Banking services will not be accessible to you if your mobile number is not updated in the Bank records. Please register your mobile number immediately to enjoy uninterrupted services.        |          Dear customer, beware of fake sites- before logging into onlinesnb for making transactions, please ensure that the URL address bar begins with https:// with padlock symbol. Click the padlock to check the Security Certificate.        |         Longer the time taken to notify, higher would be the risk of loss to you.        |      Please be cautious.
+</font>
+</marquee>
+ <nav class="navbar navbar-expand-lg navbar-light bg-info text-light py-1">
+        <div class="container">
+        <div class="collapse navbar-collapse" id="navbarCollapse2">
+            <div class="navbar-nav">
+                <a href="#" class="nav-item nav-link text-white active"><span style="display:inline-block; width: 10px;"></span><span style="display:inline-block; width: 10px;"></span>Deals & More<span style="display:inline-block; width: 10px;"></span></a>
+                <a href="#" class="nav-item nav-link text-white active">About Us<span style="display:inline-block; width: 10px;"></span></a>
+                <a href="#" class="nav-item nav-link text-white active">Contact</a><span style="display:inline-block; width: 10px;"></span>
+            
+                </div>
+                </div>
+                </div>
+    </nav>
+<div class="row">
+<span style="display:inline-block; width: 17px;"></span>
+<font style="background-color:#DEDEE4;height:30px">
+Last Login: <%= customer.getLastLogin()%></font>
+<span style="display:inline-block; width: 697px;"></span>
+<font style="background-color:#DEDEE4;height:30px;width:250px">
+Welcome <%=customer.getFirstName() + " " + customer.getLastName()%></font>
+</div>
   <div class="row">
     <div class="col-sm-4">
-      <h2>About Me</h2>
-      <h5>Photo of me:</h5>
-      <img class="d-block img-fluid" src="manager.png" alt="First slide">
-      <p>Hello..Customer welcome to your home page...</p>
-      
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
           <a class="nav-link active bg-success">Online Services</a>
         </li>
+         
         <li class="nav-item">
-          <a class="nav-link  bg-info active" href="AccountSummary.jsp"><i class="fa fa-fw fa-list fa-lg" aria-hidden="true"></i><b>Account Summary</b></a>
+          <a class="nav-link active" href="AccountSummary.jsp"><i class="fa fa-fw fa-list fa-lg" aria-hidden="true"></i><span class="sr-only">(current)</span><b>Account Summary</b></a>
         </li>
         <li class="nav-item">
-         <a class="nav-link" href="AddBeneficiary.jsp"><i class="fa fa-fw fa-user-plus fa-lg" aria-hidden="true"></i><b>Add Beneficiary</b></a>         
+          <a class="nav-link" href="FundsTransfer.jsp"><i class="fa fa-fw fa-exchange fa-lg" aria-hidden="true"></i><b>Funds Transfer</b></a>
         </li>
         <li class="nav-item">
-         <a class="nav-link" href="TransactionHomePage.jsp"><i class="fa fa-fw fa-repeat fa-lg" aria-hidden="true"></i><b>Quick Transfer</b></a>         
+          <a class="nav-link" href="TransactionHomePage.jsp"><i class="fa fa-fw fa-repeat fa-lg" aria-hidden="true"></i><b>Quick Transfer</b></a>
         </li>
         <li class="nav-item">
-         <a class="nav-link" href="FundsTransfer.jsp"><i class="fa fa-fw fa-exchange fa-lg" aria-hidden="true"></i><b>Funds Transfer</b></a>         
+          <a class="nav-link" href="TransactionHistory1.jsp"><i class="fa fa-fw fa-history fa-lg" aria-hidden="true"></i><b>Transaction History</b></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="TransactionHistory.jsp"><i class="fa fa-fw fa-history fa-lg" aria-hidden="true"></i><b>Transaction History</b></a>
+          <a class="nav-link" href="ManageBeneficiaries.jsp"><i class="fa fa-fw fa-group fa-lg" aria-hidden="true"></i><b>Manage Beneficiaries</b></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="RequestForAnother.jsp"><i class="fa fa-fw fa-group fa-lg" aria-hidden="true"></i><b>Request for another Account</b></a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item">        
           <a class="nav-link" href="CustomerProfile.jsp"><i class="fa fa-fw fa-user-circle-o fa-lg" aria-hidden="true"></i><b>Profile</b></b></a>
         </li>
       </ul>
@@ -139,45 +173,72 @@ List<Accounts> accounts = customer.getAccounts();
       
     </div>
     <div class="col-sm-8">
-    <h2>Hello..<%= customer.getFirstName() + " " + customer.getLastName()%></h2>  
-    </br>
-            
-             <div class="container">  
+     <div class="container">  
                    
         <table class="table" cellspacing="5">
-        <h3>Your Accounts Details</h3>
+        <h3>Your Account Details</h3>
     <tbody>
-    <%int i = 1;%>
-     <%for(Accounts account:accounts) {%>
-    <th>Account <%=" - "+i++ +" "%>Details</th>
+    
       <tr>
         <td>Account Number :</td>    
         <td><%=account.getAccountNumber() %></td>  
-        <tr>
-        <td>Account Type:</td>
-        <td><%=account.getAccountType() %></td>
         </tr>
-      <tr>
+       <tr> 
         <td>Balance :</td>
         <td><%=account.getBalance() %></td>
+        </tr>
+        <tr>
+        <td>Account Open Date :</td>    
+        <td><%=account.getAccountOpenDate()%></td>  
         </tr>
         <tr>
         <td>Status</td>
         <td><%=account.getStatus() %></td>
         </tr>
-        <%} %>
+        
         </tbody>
         </table>
         <th>
         </div>
-        </div>
-        </div>
-        </div>
-
-</body>
+    </div>
+    </div><br/>
+    <div class="row">
+             <div id="demo" class="carousel slide" data-ride="carousel">
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+    <li data-target="#demo" data-slide-to="3"></li>
+  </ul>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="pic.png" alt="Image" height="250" width="1120">   
+    </div>
+    <div class="carousel-item">
+    
+      <img src="accounts.png" alt="Image" height="250" width="1120">
+    </div>
+    <div class="carousel-item">
+      <img src="Watch this site reallygreatsite.com (2).png" alt="Image" height="250" width="1120">
+    </div>
+    <div class="carousel-item">
+      <img src="Watch this site reallygreatsite.com (3).png" alt="Image" height="250" width="1120">   
     </div>
   </div>
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
 </div>
+        
+                
+    </div>
+   
+  </div>
+  <br/>
+  
 
 <div class="jumbotron text-center" style="margin-bottom:0">
   <footer class="page-footer font-small blue pt-0">
@@ -203,7 +264,7 @@ List<Accounts> accounts = customer.getAccounts();
                  @SAMRIDHI Terms and conditions
              </p></b>
              <p>
-                 I agree to abide by the
+                 I agree to abide by theq1
              </p>
             <b> <p>
                 Bank's Terms and Conditions 
